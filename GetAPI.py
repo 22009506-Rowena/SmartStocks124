@@ -7,6 +7,10 @@ total_ribbons = 0
 total_arrows = 0
 total_stars = 0
 
+ribbons=3
+arrows=3
+stars=3
+
 prediction_threshold = 0.90
 
 def make_prediction(image_file):
@@ -21,6 +25,7 @@ def make_prediction(image_file):
     if response.status_code == 200:
         result = response.json()
         return {
+            
             "Total Ribbons": sum(1 for obj in result.get("predictions", []) if obj["tagName"] == "Ribbon" and obj["probability"] >= prediction_threshold),
             "Total Arrows": sum(1 for obj in result.get("predictions", []) if obj["tagName"] == "Arrow" and obj["probability"] >= prediction_threshold),
             "Total Stars": sum(1 for obj in result.get("predictions", []) if obj["tagName"] == "Star" and obj["probability"] >= prediction_threshold)
@@ -46,9 +51,9 @@ def detect_objects():
             prediction_result = make_prediction(image_file)
             
             # Update global counts
-            total_ribbons = prediction_result["Total Ribbons"]
-            total_arrows = prediction_result["Total Arrows"]
-            total_stars = prediction_result["Total Stars"]
+            total_ribbons =ribbons- prediction_result["Total Ribbons"]
+            total_arrows = arrows-prediction_result["Total Arrows"]
+            total_stars = stars-prediction_result["Total Stars"]
 
             # Return a response indicating successful image processing
             return jsonify({"Message": "Image processed successfully"})
@@ -73,9 +78,9 @@ def retrieve_result():
 
     # Return the current counts for each product in JSON format
     response_json = {
-        "Ribbons": total_ribbons,
-        "Arrows": total_arrows,
-        "Stars": total_stars
+        "BeautyEnhance": total_ribbons,
+        "JointEnhance": total_arrows,
+        "BoneEnhance": total_stars
     }
 
     return jsonify(response_json)
