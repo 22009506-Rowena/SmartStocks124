@@ -78,15 +78,13 @@ def retrieve_result():
 
     # Return the current counts for each product in JSON format
     response_json = {
-        "Beauty Enhance": total_ribbons,
-        "Joint Enhance": total_arrows,
-        "Bone Enhance": total_stars
+        "BeautyEnhance": total_ribbons,
+        "JointEnhance": total_arrows,
+        "BoneEnhance": total_stars
     }
 
     return jsonify(response_json)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
 
